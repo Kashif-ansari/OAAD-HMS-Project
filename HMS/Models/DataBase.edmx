@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Entry_id" />
+          </Key>
+          <Property Name="Entry_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="B_ID" Type="int" />
+          <Property Name="Total_Price" Type="int" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="B_ID" />
+          </Key>
+          <Property Name="B_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_ID" Type="int" />
+          <Property Name="checkup" Type="int" />
+          <Property Name="date_Join" Type="date" />
+          <Property Name="date_left" Type="date" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="Disease">
+          <Key>
+            <PropertyRef Name="Disease_ID" />
+          </Key>
+          <Property Name="Disease_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="D_ID" />
+          </Key>
+          <Property Name="D_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Staff_ID" Type="int" />
+          <Property Name="D_Name" Type="varchar" MaxLength="10" />
+          <Property Name="Specialization" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Lab_Report">
+          <Key>
+            <PropertyRef Name="LR_ID" />
+          </Key>
+          <Property Name="LR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RT_ID" Type="int" />
+          <Property Name="Cost" Type="int" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="P_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_Name" Type="varchar" MaxLength="10" />
+          <Property Name="D_ID" Type="int" />
+          <Property Name="Disease_ID" Type="int" />
+          <Property Name="LR_ID" Type="int" />
+          <Property Name="Room_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Report_Type">
+          <Key>
+            <PropertyRef Name="RT_ID" />
+          </Key>
+          <Property Name="RT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="Cost" Type="int" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Room_ID" />
+          </Key>
+          <Property Name="Room_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Room_No" Type="int" />
+          <Property Name="Cost" Type="int" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Staff_ID" />
+          </Key>
+          <Property Name="Staff_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="Address" Type="varchar" MaxLength="35" />
+          <Property Name="Contact" Type="varchar" MaxLength="15" />
+          <Property Name="Email" Type="varchar" MaxLength="25" />
+          <Property Name="salary" Type="int" />
+          <Property Name="Password" Type="varchar" MaxLength="25" />
+          <Property Name="Confirm_Password" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK__Account__B_ID__4F7CD00D">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="B_ID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="B_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__P_ID__4CA06362">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="P_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="P_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doctor__Staff_ID__38996AB5">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Staff_ID" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="Staff_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lab_Repor__RT_ID__440B1D61">
+          <End Role="Report_Type" Type="Self.Report_Type" Multiplicity="0..1" />
+          <End Role="Lab_Report" Type="Self.Lab_Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Report_Type">
+              <PropertyRef Name="RT_ID" />
+            </Principal>
+            <Dependent Role="Lab_Report">
+              <PropertyRef Name="RT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__D_ID__46E78A0C">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="D_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="D_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__Disease__47DBAE45">
+          <End Role="Disease" Type="Self.Disease" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disease">
+              <PropertyRef Name="Disease_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="Disease_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__LR_ID__48CFD27E">
+          <End Role="Lab_Report" Type="Self.Lab_Report" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lab_Report">
+              <PropertyRef Name="LR_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="LR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__Room_ID__49C3F6B7">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Room_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="Room_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HMSModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Disease" EntityType="Self.Disease" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lab_Report" EntityType="Self.Lab_Report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report_Type" EntityType="Self.Report_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Account__B_ID__4F7CD00D" Association="Self.FK__Account__B_ID__4F7CD00D">
+            <End Role="Bill" EntitySet="Bill" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__P_ID__4CA06362" Association="Self.FK__Bill__P_ID__4CA06362">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doctor__Staff_ID__38996AB5" Association="Self.FK__Doctor__Staff_ID__38996AB5">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lab_Repor__RT_ID__440B1D61" Association="Self.FK__Lab_Repor__RT_ID__440B1D61">
+            <End Role="Report_Type" EntitySet="Report_Type" />
+            <End Role="Lab_Report" EntitySet="Lab_Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__D_ID__46E78A0C" Association="Self.FK__Patient__D_ID__46E78A0C">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__Disease__47DBAE45" Association="Self.FK__Patient__Disease__47DBAE45">
+            <End Role="Disease" EntitySet="Disease" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__LR_ID__48CFD27E" Association="Self.FK__Patient__LR_ID__48CFD27E">
+            <End Role="Lab_Report" EntitySet="Lab_Report" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__Room_ID__49C3F6B7" Association="Self.FK__Patient__Room_ID__49C3F6B7">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Entry_id" />
+          </Key>
+          <Property Name="Entry_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="B_ID" Type="Int32" />
+          <Property Name="Total_Price" Type="Int32" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK__Account__B_ID__4F7CD00D" FromRole="Account" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="B_ID" />
+          </Key>
+          <Property Name="B_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_ID" Type="Int32" />
+          <Property Name="checkup" Type="Int32" />
+          <Property Name="date_Join" Type="DateTime" Precision="0" />
+          <Property Name="date_left" Type="DateTime" Precision="0" />
+          <Property Name="total" Type="Int32" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__B_ID__4F7CD00D" FromRole="Bill" ToRole="Account" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK__Bill__P_ID__4CA06362" FromRole="Bill" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Disease">
+          <Key>
+            <PropertyRef Name="Disease_ID" />
+          </Key>
+          <Property Name="Disease_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK__Patient__Disease__47DBAE45" FromRole="Disease" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="D_ID" />
+          </Key>
+          <Property Name="D_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Staff_ID" Type="Int32" />
+          <Property Name="D_Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__Doctor__Staff_ID__38996AB5" FromRole="Doctor" ToRole="Staff" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK__Patient__D_ID__46E78A0C" FromRole="Doctor" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Lab_Report">
+          <Key>
+            <PropertyRef Name="LR_ID" />
+          </Key>
+          <Property Name="LR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RT_ID" Type="Int32" />
+          <Property Name="Cost" Type="Int32" />
+          <NavigationProperty Name="Report_Type" Relationship="Self.FK__Lab_Repor__RT_ID__440B1D61" FromRole="Lab_Report" ToRole="Report_Type" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK__Patient__LR_ID__48CFD27E" FromRole="Lab_Report" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="P_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="D_ID" Type="Int32" />
+          <Property Name="Disease_ID" Type="Int32" />
+          <Property Name="LR_ID" Type="Int32" />
+          <Property Name="Room_ID" Type="Int32" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__P_ID__4CA06362" FromRole="Patient" ToRole="Bill" />
+          <NavigationProperty Name="Disease" Relationship="Self.FK__Patient__Disease__47DBAE45" FromRole="Patient" ToRole="Disease" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK__Patient__D_ID__46E78A0C" FromRole="Patient" ToRole="Doctor" />
+          <NavigationProperty Name="Lab_Report" Relationship="Self.FK__Patient__LR_ID__48CFD27E" FromRole="Patient" ToRole="Lab_Report" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__Patient__Room_ID__49C3F6B7" FromRole="Patient" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Report_Type">
+          <Key>
+            <PropertyRef Name="RT_ID" />
+          </Key>
+          <Property Name="RT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Cost" Type="Int32" />
+          <NavigationProperty Name="Lab_Report" Relationship="Self.FK__Lab_Repor__RT_ID__440B1D61" FromRole="Report_Type" ToRole="Lab_Report" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Room_ID" />
+          </Key>
+          <Property Name="Room_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Room_No" Type="Int32" />
+          <Property Name="Cost" Type="Int32" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK__Patient__Room_ID__49C3F6B7" FromRole="Room" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Staff_ID" />
+          </Key>
+          <Property Name="Staff_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="salary" Type="Int32" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Confirm_Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Doctors" Relationship="Self.FK__Doctor__Staff_ID__38996AB5" FromRole="Staff" ToRole="Doctor" />
+        </EntityType>
+        <Association Name="FK__Account__B_ID__4F7CD00D">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="B_ID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="B_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__P_ID__4CA06362">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="P_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="P_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__Disease__47DBAE45">
+          <End Role="Disease" Type="Self.Disease" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disease">
+              <PropertyRef Name="Disease_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="Disease_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doctor__Staff_ID__38996AB5">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Staff_ID" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="Staff_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__D_ID__46E78A0C">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="D_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="D_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lab_Repor__RT_ID__440B1D61">
+          <End Role="Report_Type" Type="Self.Report_Type" Multiplicity="0..1" />
+          <End Role="Lab_Report" Type="Self.Lab_Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Report_Type">
+              <PropertyRef Name="RT_ID" />
+            </Principal>
+            <Dependent Role="Lab_Report">
+              <PropertyRef Name="RT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__LR_ID__48CFD27E">
+          <End Role="Lab_Report" Type="Self.Lab_Report" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lab_Report">
+              <PropertyRef Name="LR_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="LR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__Room_ID__49C3F6B7">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Room_ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="Room_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Diseases" EntityType="Self.Disease" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="Lab_Report" EntityType="Self.Lab_Report" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="Report_Type" EntityType="Self.Report_Type" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <AssociationSet Name="FK__Account__B_ID__4F7CD00D" Association="Self.FK__Account__B_ID__4F7CD00D">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__P_ID__4CA06362" Association="Self.FK__Bill__P_ID__4CA06362">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__Disease__47DBAE45" Association="Self.FK__Patient__Disease__47DBAE45">
+            <End Role="Disease" EntitySet="Diseases" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doctor__Staff_ID__38996AB5" Association="Self.FK__Doctor__Staff_ID__38996AB5">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__D_ID__46E78A0C" Association="Self.FK__Patient__D_ID__46E78A0C">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lab_Repor__RT_ID__440B1D61" Association="Self.FK__Lab_Repor__RT_ID__440B1D61">
+            <End Role="Report_Type" EntitySet="Report_Type" />
+            <End Role="Lab_Report" EntitySet="Lab_Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__LR_ID__48CFD27E" Association="Self.FK__Patient__LR_ID__48CFD27E">
+            <End Role="Lab_Report" EntitySet="Lab_Report" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__Room_ID__49C3F6B7" Association="Self.FK__Patient__Room_ID__49C3F6B7">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HMSModelStoreContainer" CdmEntityContainer="HMSEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="HMSModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Entry_id" ColumnName="Entry_id" />
+                <ScalarProperty Name="B_ID" ColumnName="B_ID" />
+                <ScalarProperty Name="Total_Price" ColumnName="Total_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="HMSModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="B_ID" ColumnName="B_ID" />
+                <ScalarProperty Name="P_ID" ColumnName="P_ID" />
+                <ScalarProperty Name="checkup" ColumnName="checkup" />
+                <ScalarProperty Name="date_Join" ColumnName="date_Join" />
+                <ScalarProperty Name="date_left" ColumnName="date_left" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Diseases">
+            <EntityTypeMapping TypeName="HMSModel.Disease">
+              <MappingFragment StoreEntitySet="Disease">
+                <ScalarProperty Name="Disease_ID" ColumnName="Disease_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="HMSModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="D_ID" ColumnName="D_ID" />
+                <ScalarProperty Name="Staff_ID" ColumnName="Staff_ID" />
+                <ScalarProperty Name="D_Name" ColumnName="D_Name" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lab_Report">
+            <EntityTypeMapping TypeName="HMSModel.Lab_Report">
+              <MappingFragment StoreEntitySet="Lab_Report">
+                <ScalarProperty Name="LR_ID" ColumnName="LR_ID" />
+                <ScalarProperty Name="RT_ID" ColumnName="RT_ID" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="HMSModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="P_ID" ColumnName="P_ID" />
+                <ScalarProperty Name="P_Name" ColumnName="P_Name" />
+                <ScalarProperty Name="D_ID" ColumnName="D_ID" />
+                <ScalarProperty Name="Disease_ID" ColumnName="Disease_ID" />
+                <ScalarProperty Name="LR_ID" ColumnName="LR_ID" />
+                <ScalarProperty Name="Room_ID" ColumnName="Room_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Report_Type">
+            <EntityTypeMapping TypeName="HMSModel.Report_Type">
+              <MappingFragment StoreEntitySet="Report_Type">
+                <ScalarProperty Name="RT_ID" ColumnName="RT_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="HMSModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="Room_ID" ColumnName="Room_ID" />
+                <ScalarProperty Name="Room_No" ColumnName="Room_No" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="HMSModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="Staff_ID" ColumnName="Staff_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Confirm_Password" ColumnName="Confirm_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="78147756df4b4b06af9f163112b77455" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="HMSModel.Account" Width="1.5" PointX="11.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Bill" Width="1.5" PointX="8.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Disease" Width="1.5" PointX="2.875" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Doctor" Width="1.5" PointX="2.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Lab_Report" Width="1.5" PointX="8.625" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Patient" Width="1.5" PointX="5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Report_Type" Width="1.5" PointX="11.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Room" Width="1.5" PointX="7" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMSModel.Staff" Width="1.5" PointX="0.5" PointY="0.625" IsExpanded="true" />
+        <AssociationConnector Association="HMSModel.FK__Account__B_ID__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="HMSModel.FK__Bill__P_ID__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="HMSModel.FK__Patient__Disease__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="HMSModel.FK__Doctor__Staff_ID__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="HMSModel.FK__Patient__D_ID__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="HMSModel.FK__Lab_Repor__RT_ID__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="HMSModel.FK__Patient__LR_ID__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="HMSModel.FK__Patient__Room_ID__49C3F6B7" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
